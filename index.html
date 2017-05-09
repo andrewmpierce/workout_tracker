@@ -2,8 +2,11 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script>
     $(document).ready(function(){
-      $('#push').click(function(e){
-        console.log("clicked push");
+
+      $('.workout').click(function(e){
+        console.log(this.id);
+        $('#' + this.id + '_details').toggle();
+
       });
 
     });
@@ -11,14 +14,33 @@
   </script>
 </head>
 <body>
-<div id=push>
-  <button>PUSH WORKOUT</button>
+<div id=push class=workout>
+  <button>PUSH WORKOUT</button><br>
+  <div id=push_details style="display: none;">
+    <span>Chest Press</span>
+    <span>Incline Fly</span>
+    <span>Arnold Press</span>
+    <span>Overhead Tricep Extension</span>
+  </div>
 </div>
-<div id=pull>
+<div id=pull class=workout>
   <button>PULL WORKOUT</button>
+  <div id=pull_details style=style="display: none;">
+    <span>Pull Up</span>
+    <span>Bent Over Row</span>
+    <span>Reverse Fly</span>
+    <span>Shrug</span>
+    <span>Bicep Curl</span>
+  </div>
 </div>
-<div id=legs>
+<div id=legs class=workout>
   <button>LEGS WORKOUT</button>
+  <div id=legs_details style="style=display: none;">
+    <span>Goblet Squat</span>
+    <span>Lunge</span>
+    <span>Single Leg Deadlift</span>
+    <span>Calf Raise</span>
+  </div>
 </div>
 
 

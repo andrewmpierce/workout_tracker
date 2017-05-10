@@ -4,7 +4,9 @@
   "description": "",
   "main": "server.js",
   "dependencies": {
-    "express": "^4.15.2"
+    "express": "^4.15.2",
+    "express-form": "^0.12.6",
+    "body-parser": "^1.17.1",
   },
   "devDependencies": {},
   "scripts": {

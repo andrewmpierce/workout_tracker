@@ -1,6 +1,6 @@
 $(document).ready(function(){
 
-  $('.workout').click(function(e){
+  $(':button').click(function(e){
     console.log(this.id);
     $('#' + this.id + '_details').toggle();
   });

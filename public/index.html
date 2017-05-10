@@ -4,10 +4,10 @@
   <script src=index.js></script>
 </head>
 <body>
-<div id=push class=workout>
-  <button>PUSH WORKOUT</button>
+<div class=workout>
+  <button id="push">PUSH WORKOUT</button>
   <div id=push_details class=hidden>
-    <form>
+    <form action="/upload/" method="post">
       Chest Press:<br>
       <input type="text" name="chest_press_1"><br>
       <input type="text" name="chest_press_2"><br>
@@ -32,10 +32,10 @@
     </form>
   </div>
 </div>
-<div id=pull class=workout>
-  <button>PULL WORKOUT</button>
+<div class=workout>
+  <button id=pull>PULL WORKOUT</button>
   <div id=pull_details class=hidden>
-    <form>
+    <form action="/upload/" method="post">
       Pull Up:<br>
       <input type="text" name="pull_up_1"><br>
       <input type="text" name="pull_up_2"><br>
@@ -65,8 +65,8 @@
     </form>
   </div>
 </div>
-<div id=legs class=workout>
-  <button>LEGS WORKOUT</button>
+<div class=workout>
+  <button id=legs>LEGS WORKOUT</button>
   <div id=legs_details class=hidden>
     <form>
       Goblet Squat:<br>

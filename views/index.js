@@ -6,6 +6,7 @@ $(document).ready(function(){
 
     $.get("/api/"+this.id, function(data) {
       console.log(data);
+      $('#chest_press' ).text("Chest Press - " + data.chest_press + " lbs :");
     });
 
   });

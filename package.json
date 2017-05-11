@@ -4,9 +4,10 @@
   "description": "",
   "main": "server.js",
   "dependencies": {
+    "body-parser": "^1.17.1",
     "express": "^4.15.2",
     "express-form": "^0.12.6",
-    "body-parser": "^1.17.1",
+    "pg": "^6.1.5"
   },
   "devDependencies": {},
   "scripts": {

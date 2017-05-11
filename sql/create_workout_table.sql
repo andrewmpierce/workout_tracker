@@ -11,7 +11,7 @@ CREATE TABLE push (
     arnold_press_reps smallint NOT NULL,
     overhead_tricep_extension_weight smallint NOT NULL,
     overhead_tricep_extension_reps smallint NOT NULL,
-    date_added timestamp default NULL
+    date_added timestamp default NOW()
 );
 
 CREATE TABLE pull (
@@ -27,7 +27,7 @@ CREATE TABLE pull (
     shrug_reps smallint NOT NULL,
     bicep_curl_weight smallint NOT NULL,
     bicep_curl_reps smallint NOT NULL,
-    date_added timestamp default NULL
+    date_added timestamp default NOW()
 );
 
 CREATE TABLE legs (
@@ -41,5 +41,5 @@ CREATE TABLE legs (
     single_leg_deadlift_reps smallint NOT NULL,
     calf_raise_weight smallint NOT NULL,
     calf_raise_reps smallint NOT NULL,
-    date_added timestamp default NULL
+    date_added timestamp default NOW()
 );

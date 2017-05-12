@@ -23,7 +23,7 @@ var server = app.listen(3000, function () {
 });
 
 app.get('/api/:workout?', function(req, res, next) {
-    console.log(req.params.workout);
+    //console.log(req.params.workout);
     var stats = {
       chest_press: 25
     };
@@ -33,22 +33,41 @@ app.get('/api/:workout?', function(req, res, next) {
 
 
 app.post('/upload', function(req, res, next) {
-    console.log(req.body);
-});
-
-pg.connect(conString, function (err, client, done) {
-  if (err) {
-    return console.error('error fetching client from pool', err)
-  }
-  client.query('SELECT * FROM pull', [], function (err, result) {
-      done() //this done callback signals the pg driver that the connection can be closed or returned to the connection pool
-
-      if (err) {
-        // pass the error to the express error handler
-        return next(err)
+  var workout = {};
+  var data = req.body;
+  for (var key in data) {
+    if (data.hasOwnProperty(key)) {
+      var movement_reps = key.slice(0, -2) + '_reps';
+      console.log(key.slice(-7));
+      if (key.slice(-7) === '_weight') {
+        workout[key] = parseInt(data[key]);
       }
+      else if (!workout[movement_reps]) {
+        workout[movement_reps] = parseInt(data[key]);
+      }
+      else {
+        workout[movement_reps] += parseInt(data[key]);
+      }
+    }
+  }
 
-    console.log(result.rows[0])
-    process.exit(0)
+  console.log(workout);
+
+  pg.connect(conString, function (err, client, done) {
+    if (err) {
+      return console.error('error fetching client from pool', err)
+    }
+    client.query('SELECT * FROM pull', [], function (err, result) {
+        done() //this done callback signals the pg driver that the connection can be closed or returned to the connection pool
+
+        if (err) {
+          // pass the error to the express error handler
+          return next(err);
+        }
+
+      //console.log(result);
+      //process.exit(0)
+    })
   })
-})
+
+});

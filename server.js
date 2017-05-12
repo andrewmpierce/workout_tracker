@@ -33,12 +33,15 @@ app.get('/api/:workout?', function(req, res, next) {
 
 
 app.post('/upload', function(req, res, next) {
-  var workout = {};
   var data = req.body;
+  var workout = {
+    workout_type: data.workout_type
+  };
+  delete data.workout_type;
+  
   for (var key in data) {
     if (data.hasOwnProperty(key)) {
       var movement_reps = key.slice(0, -2) + '_reps';
-      console.log(key.slice(-7));
       if (key.slice(-7) === '_weight') {
         workout[key] = parseInt(data[key]);
       }

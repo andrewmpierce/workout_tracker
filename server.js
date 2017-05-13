@@ -25,7 +25,10 @@ var server = app.listen(3000, function () {
 app.get('/api/:workout?', function(req, res, next) {
     //console.log(req.params.workout);
     var stats = {
-      chest_press: 25
+      chest_press_weight: 30,
+      overhead_tricep_extension_weight: 30,
+      incline_fly_weight: 15,
+      arnold_press_weight: 15
     };
     return res.json(stats);
     //console.log(res);
@@ -38,7 +41,7 @@ app.post('/upload', function(req, res, next) {
     workout_type: data.workout_type
   };
   delete data.workout_type;
-  
+
   for (var key in data) {
     if (data.hasOwnProperty(key)) {
       var movement_reps = key.slice(0, -2) + '_reps';

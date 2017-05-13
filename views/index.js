@@ -6,8 +6,13 @@ $(document).ready(function(){
 
     $.get("/api/"+this.id, function(data) {
       console.log(data);
-      $('#chest_press' ).text("Chest Press - " + data.chest_press + " lbs :");
-      $('#chest_press_weight' ).val(data.chest_press);
+      for (var key in data) {
+        var movement = key.slice(0, -7);
+        var movement_spaces = movement.replace(/_/g," ");
+        $('#' + movement ).text(movement_spaces + " - " + data[key] + " lbs ");
+        $('#' + key ).val(data[key]);
+
+      }
     });
 
   });

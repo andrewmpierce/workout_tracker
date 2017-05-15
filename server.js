@@ -57,7 +57,6 @@ app.post('/upload', function(req, res, next) {
     }
   }
 
-  console.log(workout);
 
   pg.connect(conString, function (err, client, done) {
     if (err) {
@@ -65,7 +64,7 @@ app.post('/upload', function(req, res, next) {
     }
     client.query('SELECT * FROM pull', [], function (err, result) {
         done() //this done callback signals the pg driver that the connection can be closed or returned to the connection pool
-
+        console.log(result.rows);
         if (err) {
           // pass the error to the express error handler
           return next(err);

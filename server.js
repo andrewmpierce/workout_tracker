@@ -24,12 +24,6 @@ var server = app.listen(3000, function () {
 
 app.get('/api/:workout?', function(req, res, next) {
     var workout = req.params.workout;
-    var stats = {
-      chest_press_weight: 30,
-      overhead_tricep_extension_weight: 30,
-      incline_fly_weight: 15,
-      arnold_press_weight: 15
-    };
     var query_string = 'SELECT * FROM ' + workout + ' WHERE user_id=$1'
     //console.log(res);
     pg.connect(conString, function (err, client, done) {
@@ -38,13 +32,27 @@ app.get('/api/:workout?', function(req, res, next) {
       }
       client.query(query_string, ['andrew'], function (err, result) {
           done() //this done callback signals the pg driver that the connection can be closed or returned to the connection pool
-          stats = result.rows[0];
+          var stats = result.rows[0];
           if (err) {
             // pass the error to the express error handler
             return next(err);
           }
-          console.log(stats);
-          return res.json(stats);
+
+          var ret = {};
+          for (var key in stats) {
+            if (key.slice(-7) === '_weight') {
+              var reps = key.slice(0,-7) + '_reps';
+              console.log(stats[reps]);
+              if (stats[reps] == 36) {
+                ret[key] = stats[key] + 5;
+              } else {
+                ret[key] = stats[key];
+              }
+            }
+          }
+
+          //console.log(ret);
+          return res.json(ret);
         //console.log(result);
         //process.exit(0)
       })

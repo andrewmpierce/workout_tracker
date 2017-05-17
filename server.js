@@ -82,7 +82,6 @@ app.post('/upload', function(req, res, next) {
     }
   }
 
-  console.log(workout.workout_type);
   switch (workout.workout_type) {
     case 'pull':
       var query_string = "INSERT INTO pull (user_id, pull_up_weight, pull_up_reps, bent_over_row_weight, bent_over_row_reps, reverse_fly_weight, reverse_fly_reps, shrug_weight, shrug_reps, bicep_curl_weight, bicep_curl_reps) VALUES ('test', $1, $2, $3, $4, $5, $6, $7, $8, $9, $10)";
@@ -92,11 +91,17 @@ app.post('/upload', function(req, res, next) {
     break;
 
     case 'push':
-
+      var query_string = "INSERT INTO push (user_id, chest_press_weight, chest_press_reps, incline_fly_weight, incline_fly_reps, arnold_press_weight, arnold_press_reps, tricep_overhead_extension_weight, tricep_overhead_extension_reps) VALUES ('test', $1, $2, $3, $4, $5, $6, $7, $8)";
+      console.log(query_string);
+      var query_array = [workout.chest_press_weight, workout.chest_press_reps, workout.incline_fly_weight, workout.incline_fly_reps, workout.arnold_press_weight, workout.arnold_press_reps, workout.tricep_overhead_extension_weight, workout.tricep_overhead_extension_reps];
+      console.log(query_array);
     break;
 
     case 'legs':
-
+      var query_string = "INSERT INTO legs (user_id, goblet_squat_weight, goblet_squat_reps, lunge_weight, lunge_reps, single_leg_deadlift_weight, single_leg_deadlift_reps, calf_raise_weight, calf_raise_reps) VALUES ('test', $1, $2, $3, $4, $5, $6, $7, $8)";
+      console.log(query_string);
+      var query_array = [workout.goblet_squat_weight, workout.goblet_squat_reps, workout.lunge_weight, workout.lunge_reps, workout.single_leg_deadlift_weight, workout.single_leg_deadlift_reps, workout.calf_raise_weight, workout.calf_raise_reps];
+      console.log(query_array);
     break;
   }
   pg.connect(conString, function (err, client, done) {

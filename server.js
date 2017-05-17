@@ -25,7 +25,7 @@ var server = app.listen(3000, function () {
 app.get('/api/:workout?', function(req, res, next) {
     var workout = req.params.workout;
     var query_string = 'SELECT * FROM ' + workout + ' WHERE user_id=$1'
-    //console.log(res);
+
     pg.connect(conString, function (err, client, done) {
       if (err) {
         return console.error('error fetching client from pool', err)
@@ -42,7 +42,6 @@ app.get('/api/:workout?', function(req, res, next) {
           for (var key in stats) {
             if (key.slice(-7) === '_weight') {
               var reps = key.slice(0,-7) + '_reps';
-              console.log(stats[reps]);
               if (stats[reps] == 36) {
                 ret[key] = stats[key] + 5;
               } else {
@@ -83,14 +82,30 @@ app.post('/upload', function(req, res, next) {
     }
   }
 
-  console.log(workout)
+  console.log(workout.workout_type);
+  switch (workout.workout_type) {
+    case 'pull':
+      var query_string = "INSERT INTO pull (user_id, pull_up_weight, pull_up_reps, bent_over_row_weight, bent_over_row_reps, reverse_fly_weight, reverse_fly_reps, shrug_weight, shrug_reps, bicep_curl_weight, bicep_curl_reps) VALUES ('test', $1, $2, $3, $4, $5, $6, $7, $8, $9, $10)";
+      console.log(query_string);
+      var query_array = [workout.pull_up_weight, workout.pull_up_reps, workout.bent_over_row_weight, workout.bent_over_row_reps, workout.reverse_fly_weight, workout.reverse_fly_reps, workout.shrug_weight, workout.shrug_reps, workout.bicep_curl_weight, workout.bicep_curl_reps];
+      console.log(query_array);
+    break;
+
+    case 'push':
+
+    break;
+
+    case 'legs':
+
+    break;
+  }
   pg.connect(conString, function (err, client, done) {
     if (err) {
       return console.error('error fetching client from pool', err)
     }
-    client.query('SELECT * FROM pull WHERE user_id=$1', ['andrew'], function (err, result) {
+    client.query(query_string, query_array, function (err, result) {
         done() //this done callback signals the pg driver that the connection can be closed or returned to the connection pool
-        console.log(result.rows);
+        console.log(result);
         if (err) {
           // pass the error to the express error handler
           return next(err);

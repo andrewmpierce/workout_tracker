@@ -4,7 +4,7 @@ var bodyParser = require('body-parser');
 var form = require('express-form');
 var field = form.field;
 const pg = require('pg');
-const conString = 'postgres://andrew:@localhost/workout_tracker'; // make sure to match your own database's credentials
+const conString = process.env.DATABASE_URL || 'postgres://andrew:@localhost/workout_tracker'; // make sure to match your own database's credentials
 
 
 

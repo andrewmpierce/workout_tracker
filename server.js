@@ -24,7 +24,7 @@ var server = app.listen(3000, function () {
 
 app.get('/api/:workout?', function(req, res, next) {
     var workout = req.params.workout;
-    var query_string = 'SELECT * FROM ' + workout + ' WHERE user_id=$1'
+    var query_string = 'SELECT * FROM ' + workout + ' WHERE user_id=$1 ORDER  BY "date_added" DESC LIMIT 1;'
 
     pg.connect(conString, function (err, client, done) {
       if (err) {

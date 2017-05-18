@@ -30,7 +30,7 @@ app.get('/api/:workout?', function(req, res, next) {
       if (err) {
         return console.error('error fetching client from pool', err)
       }
-      client.query(query_string, ['andrew'], function (err, result) {
+      client.query(query_string, ['test'], function (err, result) {
           done() //this done callback signals the pg driver that the connection can be closed or returned to the connection pool
           var stats = result.rows[0];
           if (err) {
@@ -66,11 +66,12 @@ app.post('/upload', function(req, res, next) {
     workout_type: data.workout_type
   };
   delete data.workout_type;
-
+  console.log(data);
   for (var key in data) {
     if (data.hasOwnProperty(key)) {
       var movement_reps = key.slice(0, -2) + '_reps';
-      if (key.slice(-7) === '_weight') {
+      if (key.slice(-7) == '_weight') {
+        console.log(data[key]);
         workout[key] = parseInt(data[key]);
       }
       else if (!workout[movement_reps]) {
@@ -81,7 +82,7 @@ app.post('/upload', function(req, res, next) {
       }
     }
   }
-
+  console.log(workout);
   switch (workout.workout_type) {
     case 'pull':
       var query_string = "INSERT INTO pull (user_id, pull_up_weight, pull_up_reps, bent_over_row_weight, bent_over_row_reps, reverse_fly_weight, reverse_fly_reps, shrug_weight, shrug_reps, bicep_curl_weight, bicep_curl_reps) VALUES ('test', $1, $2, $3, $4, $5, $6, $7, $8, $9, $10)";
@@ -91,9 +92,9 @@ app.post('/upload', function(req, res, next) {
     break;
 
     case 'push':
-      var query_string = "INSERT INTO push (user_id, chest_press_weight, chest_press_reps, incline_fly_weight, incline_fly_reps, arnold_press_weight, arnold_press_reps, tricep_overhead_extension_weight, tricep_overhead_extension_reps) VALUES ('test', $1, $2, $3, $4, $5, $6, $7, $8)";
+      var query_string = "INSERT INTO push (user_id, chest_press_weight, chest_press_reps, incline_fly_weight, incline_fly_reps, arnold_press_weight, arnold_press_reps, overhead_tricep_extension_weight, overhead_tricep_extension_reps) VALUES ('test', $1, $2, $3, $4, $5, $6, $7, $8)";
       console.log(query_string);
-      var query_array = [workout.chest_press_weight, workout.chest_press_reps, workout.incline_fly_weight, workout.incline_fly_reps, workout.arnold_press_weight, workout.arnold_press_reps, workout.tricep_overhead_extension_weight, workout.tricep_overhead_extension_reps];
+      var query_array = [workout.chest_press_weight, workout.chest_press_reps, workout.incline_fly_weight, workout.incline_fly_reps, workout.arnold_press_weight, workout.arnold_press_reps, workout.overhead_tricep_extension_weight, workout.overhead_tricep_extension_reps];
       console.log(query_array);
     break;
 

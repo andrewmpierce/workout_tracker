@@ -10,7 +10,7 @@ $(document).ready(function(){
         var movement = key.slice(0, -7);
         var movement_spaces = movement.replace(/_/g," ");
         $('#' + movement ).text(movement_spaces + " - " + data[key] + " lbs ");
-        $('#' + key ).val(data[key]);
+        $('[name=' + key + ']' ).val(data[key]);
 
       }
     });

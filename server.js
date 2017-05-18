@@ -23,6 +23,18 @@ var server = app.listen(port, function () {
    console.log("Example app listening at http://%s:%s", host, port)
 });
 
+app.get('/db', function (request, response) {
+  pg.connect(process.env.DATABASE_URL, function(err, client, done) {
+    client.query('SELECT * FROM test_table', function(err, result) {
+      done();
+      if (err)
+       { console.error(err); response.send("Error " + err); }
+      else
+       { response.render('pages/db', {results: result.rows} ); }
+    });
+  });
+});
+
 app.get('/api/:workout?', function(req, res, next) {
     var workout = req.params.workout;
     var query_string = 'SELECT * FROM ' + workout + ' WHERE user_id=$1 ORDER  BY "date_added" DESC LIMIT 1;'
@@ -67,12 +79,11 @@ app.post('/upload', function(req, res, next) {
     workout_type: data.workout_type
   };
   delete data.workout_type;
-  console.log(data);
+
   for (var key in data) {
     if (data.hasOwnProperty(key)) {
       var movement_reps = key.slice(0, -2) + '_reps';
       if (key.slice(-7) == '_weight') {
-        console.log(data[key]);
         workout[key] = parseInt(data[key]);
       }
       else if (!workout[movement_reps]) {
@@ -83,7 +94,6 @@ app.post('/upload', function(req, res, next) {
       }
     }
   }
-  console.log(workout);
   switch (workout.workout_type) {
     case 'pull':
       var query_string = "INSERT INTO pull (user_id, pull_up_weight, pull_up_reps, bent_over_row_weight, bent_over_row_reps, reverse_fly_weight, reverse_fly_reps, shrug_weight, shrug_reps, bicep_curl_weight, bicep_curl_reps) VALUES ('test', $1, $2, $3, $4, $5, $6, $7, $8, $9, $10)";

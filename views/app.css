@@ -1,3 +1,33 @@
+body {
+    background-color: #EFEFEF;
+}
+
+h1 {
+  font-family: Impact, Haettenschweiler, "Franklin Gothic Bold", Charcoal, "Helvetica Inserat", "Bitstream Vera Sans Bold", "Arial Black", "sans serif";
+	font-size: 48px;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: 500;
+  color: #A9A9A9;
+  text-align: center;
+}
+
+button {
+    background-color: #CAEBF2; /* Green */
+    border: none;
+    color: #FF3B3F;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.workout {
+  text-align: center;
+}
+
 .hidden {
    display: none;
 }

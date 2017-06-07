@@ -2,11 +2,11 @@ var express = require('express');
 var app = express();
 var routes = require("./routes");
 var bodyParser = require('body-parser');
-
+app.use(bodyParser());
 
 app.use("/", routes);
-app.use("/update", routes);
-app.use("/create", routes);
+app.use("/upload", routes);
+app.use("/api", routes);
 
 
 
@@ -15,7 +15,6 @@ app.use(express.static('views'));
 //    res.sendFile( __dirname + "/" + "index.html" );
 // })
 
-app.use(bodyParser());
 
 var port = process.env.PORT || 3000;
 var server = app.listen(port, function () {

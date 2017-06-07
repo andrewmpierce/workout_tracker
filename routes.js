@@ -1,5 +1,5 @@
 var express = require('express');
-var router = express();
+var router = express.Router();
 var bodyParser = require('body-parser');
 var form = require('express-form');
 var field = form.field;
